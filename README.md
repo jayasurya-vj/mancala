@@ -5,18 +5,18 @@
 
 Rules of Mancala
 
-The game begins with one player picking up all of the pieces in any one of the pockets on his/her side.
+1. The game begins with one player picking up all of the pieces in any one of the pockets on his/her side.
 
-Moving counter-clockwise, the player deposits one of the stones in each pocket until the stones run out
+2. Moving counter-clockwise, the player deposits one of the stones in each pocket until the stones run out
 
-If you run into your own Mancala (store), deposit one piece in it. If you run into your opponent's Mancala, skip it and continue moving to the next pocket.
+3. If you run into your own Mancala (store), deposit one piece in it. If you run into your opponent's Mancala, skip it and continue moving to the next pocket.
 
-If the last piece you drop is in your own Mancala, you take another turn.
+4. If the last piece you drop is in your own Mancala, you take another turn.
 
-If the last piece you drop is in an empty pocket on your side, you capture that piece and any pieces in the pocket directly opposite.
+5. If the last piece you drop is in an empty pocket on your side, you capture that piece and any pieces in the pocket directly opposite.
 
-Always place all captured pieces in your Mancala (store).
+6. Always place all captured pieces in your Mancala (store).
 
-The game ends when all six pockets on one side of the Mancala board are empty.
+7. The game ends when all six pockets on one side of the Mancala board are empty.
 
-Count all the pieces in each side. The winner is the player with the most pieces.
+8. Count all the pieces in each side. The winner is the player with the most pieces.
