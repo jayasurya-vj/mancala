@@ -2,6 +2,7 @@ package com.game.mancala.service
 
 
 
+import com.game.mancala.constants.MancalaConstants
 import com.game.mancala.constants.MancalaConstants.MANCALA_INDEX
 import com.game.mancala.constants.MancalaConstants.NUM_LAST_PIT_STONES_ELIGIBLE_FOR_CAPTURE
 import com.game.mancala.constants.MancalaConstants.NUM_PITS
@@ -10,62 +11,61 @@ import com.game.mancala.model.Game
 import com.game.mancala.model.GameStatus
 import com.game.mancala.model.MancalaClientMsg
 import com.game.mancala.model.Turn
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 
 @Service
-class MancalaService {
+class MancalaGamePlayService {
+
+    private val logger = LoggerFactory.getLogger(MancalaGamePlayService::class.java)
 
 
-    val oppPitPairIndexes: IntArray = intArrayOf(5, 4, 3, 2, 1, 0);
-
-    fun handleRequest(){
-
-    }
+    val oppPitPairIndexes: IntArray = intArrayOf(5, 4, 3, 2, 1, 0)
 
     fun play(mancalaClientMsg: MancalaClientMsg, currentGame:Game): Game {
-            var currentPlayerPits: IntArray
-            var opponentPlayerPits: IntArray
+        logger.info("${MancalaConstants.METHOD_ENTRY} play()")
+            val currentPlayerPits: IntArray
+            val opponentPlayerPits: IntArray
             var lastIndexIfCurrentPlayerPits : Int? = null
 
             if(currentGame.turn == Turn.A){
-              println("Turn - Player A")
+              logger.info("Turn - Player A")
               currentPlayerPits= currentGame.pitsA
               opponentPlayerPits= currentGame.pitsB
-
             }else {
-              println("Turn - Player B")
+              logger.info("Turn - Player B")
               currentPlayerPits= currentGame.pitsB
               opponentPlayerPits= currentGame.pitsA
             }
 
-            //change position
             if(currentPlayerPits[mancalaClientMsg.selectedPitIndex]<=0){
-                println("Error : Not Allowed - Please select a non empty pit")
+                logger.error("Error : Not Allowed - Please select a non empty pit")
                 throw ResponseStatusException(HttpStatus.BAD_REQUEST)
             }
 
             lastIndexIfCurrentPlayerPits = updatePits(currentPlayerPits,opponentPlayerPits,mancalaClientMsg.selectedPitIndex)
 
-            println("After Turn: curr - ${currentPlayerPits.contentToString()} , opp - ${opponentPlayerPits.contentToString()}")
+             logger.info("After Turn: curr - ${currentPlayerPits.contentToString()} , opp - ${opponentPlayerPits.contentToString()}")
 
             captureStonesIfOwnEmptyLastPit(currentPlayerPits,opponentPlayerPits,lastIndexIfCurrentPlayerPits)
 
-            println("After Capture: curr - ${currentPlayerPits.contentToString()} , opp - ${opponentPlayerPits.contentToString()}")
+             logger.info("After Capture: curr - ${currentPlayerPits.contentToString()} , opp - ${opponentPlayerPits.contentToString()}")
 
             checkNextTurn(currentGame,lastIndexIfCurrentPlayerPits)
 
-            println("After the round: A - $currentGame.pitsA , B - $currentGame.pitsB")
+            logger.info("Current game After Round - $currentGame")
 
-             println("Current game After Round - $currentGame")
+            logger.info("${MancalaConstants.METHOD_EXIT} play()")
 
             return currentGame;
     }
 
 
     fun updatePits(currentPlayerPits:IntArray, opponentPlayerPits:IntArray, selectedPitIndex: Int ): Int? {
+        logger.info("${MancalaConstants.METHOD_ENTRY} updatePits()")
         var stonesInHand:Int = currentPlayerPits[selectedPitIndex]
         currentPlayerPits[selectedPitIndex] = 0;
 
@@ -101,12 +101,14 @@ class MancalaService {
                 index = 0;
             }
         }
+        logger.info("${MancalaConstants.METHOD_EXIT} updatePits()")
 
         return lastIndexIfCurrentPlayerPits;
     }
 
 
     fun captureStonesIfOwnEmptyLastPit(currentPlayerPits:IntArray, opponentPlayerPits:IntArray, lastIndexIfCurrentPlayerPits:Int?){
+        logger.info("${MancalaConstants.METHOD_ENTRY} captureStonesIfOwnEmptyLastPit()")
 
         if(lastIndexIfCurrentPlayerPits!=null && lastIndexIfCurrentPlayerPits!=MANCALA_INDEX &&
             currentPlayerPits[lastIndexIfCurrentPlayerPits] == NUM_LAST_PIT_STONES_ELIGIBLE_FOR_CAPTURE){
@@ -121,11 +123,13 @@ class MancalaService {
             }
 
         }
+        logger.info("${MancalaConstants.METHOD_EXIT} captureStonesIfOwnEmptyLastPit()")
 
     }
 
 
     fun checkNextTurn(currentGame:Game, lastIndexIfCurrentPlayerPits:Int?){
+        logger.info("${MancalaConstants.METHOD_ENTRY} checkNextTurn()")
         if(currentGame.gameOver()) {
             currentGame.turn = null
             currentGame.gameOver = true
@@ -136,6 +140,7 @@ class MancalaService {
                 currentGame.turn = if(currentGame.turn==Turn.A) Turn.B else Turn.A
             }
         }
+        logger.info("${MancalaConstants.METHOD_EXIT} checkNextTurn()")
     }
 
 

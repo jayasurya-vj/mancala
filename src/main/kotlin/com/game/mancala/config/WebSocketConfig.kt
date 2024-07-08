@@ -1,14 +1,13 @@
 package com.game.mancala.config
 
 import com.game.mancala.controller.WebsocketController
-import com.game.mancala.service.MancalaService
-import org.springframework.context.annotation.Bean
+import com.game.mancala.service.MancalaGamePlayService
+import com.game.mancala.service.MancalaGameRegistryService
+import com.game.mancala.service.MancalaSendMessageService
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.socket.WebSocketHandler
 import org.springframework.web.socket.config.annotation.EnableWebSocket
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
-import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean
 
 
 @Configuration
@@ -16,6 +15,9 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 class WebConfig : WebSocketConfigurer {
 
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(WebsocketController(mancalaService = MancalaService()), "/mancalaconnection").setAllowedOrigins("*")
+        registry.addHandler(WebsocketController(mancalaGameRegistryService = MancalaGameRegistryService(
+            MancalaGamePlayService(),MancalaSendMessageService()),
+            mancalaSendMessageService= MancalaSendMessageService()),
+            "/mancala").setAllowedOrigins("*")
     }
 }

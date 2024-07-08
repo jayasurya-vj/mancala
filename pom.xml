@@ -33,10 +33,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-integration</artifactId>
 		</dependency>
 		<dependency>
@@ -65,10 +61,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
-			<artifactId>spring-integration-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-stomp</artifactId>
 		</dependency>
 		<dependency>
@@ -76,11 +68,6 @@
 			<artifactId>spring-integration-websocket</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -90,6 +77,17 @@
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-test-junit5</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.github.microutils</groupId>
+			<artifactId>kotlin-logging-jvm</artifactId>
+			<version>2.0.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.4.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
